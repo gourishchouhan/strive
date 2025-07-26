@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -24,9 +24,9 @@ export default function SchedulePage() {
 
   useEffect(() => {
     fetchTasks()
-  }, [currentDate])
+  }, [currentDate, fetchTasks])
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const dateString = currentDate.toISOString().split('T')[0]
       const response = await fetch(`/api/tasks?date=${dateString}`)
@@ -37,7 +37,7 @@ export default function SchedulePage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentDate])
 
   const toggleTask = async (taskId) => {
     try {

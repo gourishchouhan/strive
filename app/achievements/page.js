@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -156,9 +156,9 @@ export default function AchievementsPage() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [fetchData])
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [tasksRes, challengesRes, dashboardRes] = await Promise.all([
         fetch('/api/tasks'),
@@ -206,7 +206,7 @@ export default function AchievementsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   const calculateProgress = (achievement, stats) => {
     switch (achievement.type) {

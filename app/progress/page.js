@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
@@ -48,9 +48,9 @@ export default function ProgressPage() {
 
   useEffect(() => {
     fetchAnalytics()
-  }, [])
+  }, [fetchAnalytics])
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       // Fetch all data needed for analytics
       const [tasksRes, challengesRes, dashboardRes] = await Promise.all([
@@ -94,7 +94,7 @@ export default function ProgressPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   const getWeeklyProgress = (tasks) => {
     const last7Days = []
