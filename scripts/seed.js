@@ -37,7 +37,7 @@ const Task = mongoose.model('Task', taskSchema)
 async function seedData() {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/strive')
+    await mongoose.connect(process.env.MONGODB_URI)
     
     console.log('Connected to MongoDB')
     
