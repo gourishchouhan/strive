@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from '@/components/Sidebar'
+import AuthProvider from '@/components/AuthProvider'
+import ConditionalLayout from '@/components/ConditionalLayout'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex h-screen bg-background">
-          <Sidebar />
-          <main className="flex-1 overflow-auto lg:ml-0">
-            <div className="p-4 lg:p-8 pt-16 lg:pt-8">
-              {children}
-            </div>
-          </main>
-        </div>
+        <AuthProvider>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+        </AuthProvider>
       </body>
     </html>
   );

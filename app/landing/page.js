@@ -11,10 +11,15 @@ import {
   Calendar, 
   BarChart3, 
   Trophy, 
-  ArrowRight
+  CheckCircle, 
+  Users, 
+  ArrowRight,
+  Star,
+  Zap,
+  Shield
 } from 'lucide-react'
 
-export default function HomePage() {
+export default function LandingPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -48,6 +53,7 @@ export default function HomePage() {
         <nav className="hidden md:flex space-x-6">
           <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
           <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How it Works</a>
+          <a href="#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">Testimonials</a>
         </nav>
         <Link href="/auth">
           <Button variant="outline">Sign In</Button>
@@ -177,6 +183,24 @@ export default function HomePage() {
                 Analyze your progress, earn achievements, and build lasting habits that stick.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          <div>
+            <div className="text-4xl font-bold text-primary mb-2">10,000+</div>
+            <div className="text-muted-foreground">Challenges Completed</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-primary mb-2">5,000+</div>
+            <div className="text-muted-foreground">Active Users</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-primary mb-2">85%</div>
+            <div className="text-muted-foreground">Success Rate</div>
           </div>
         </div>
       </section>

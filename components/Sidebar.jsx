@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useSession, signOut } from 'next-auth/react'
 import { 
   Home, 
   Target, 
@@ -10,13 +11,15 @@ import {
   BarChart3, 
   Trophy, 
   Menu, 
-  X
+  X,
+  LogOut,
+  User
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/dashboard', icon: Home },
   { name: 'Challenges', href: '/challenges', icon: Target },
   { name: 'Schedule', href: '/schedule', icon: Calendar },
   { name: 'Progress', href: '/progress', icon: BarChart3 },
@@ -26,6 +29,11 @@ const navigation = [
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session } = useSession()
+
+  const handleLogout = () => {
+    signOut({ callbackUrl: '/' })
+  }
 
   return (
     <>
@@ -85,6 +93,38 @@ export default function Sidebar() {
               )
             })}
           </nav>
+
+          {/* User section */}
+          {session && (
+            <div className="p-4 border-t border-border">
+              <div className="flex items-center space-x-3 mb-4">
+                {session.user.image ? (
+                  <img
+                    src={session.user.image}
+                    alt={session.user.name}
+                    className="w-10 h-10 rounded-full"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <User className="w-5 h-5 text-primary" />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{session.user.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{session.user.email}</p>
+                </div>
+              </div>
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="w-full justify-start"
+                size="sm"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </>
